@@ -70,7 +70,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Employee Management System</h1>
+      <h1>Employee Management System.</h1>
 
       {/* Add Employee */}
       <div className="card">

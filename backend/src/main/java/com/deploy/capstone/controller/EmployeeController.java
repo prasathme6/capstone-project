@@ -26,12 +26,6 @@ public class EmployeeController {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "CI/CD deployment is working!";
-    }
-
     
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
