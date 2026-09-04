@@ -31,6 +31,7 @@ jobs:
           cache: maven
 
       - name: Build Spring Boot application
+        working-directory: backend
         run: mvn clean package -DskipTests
 
       - name: Configure AWS credentials
@@ -46,6 +47,7 @@ jobs:
           410126553447.dkr.ecr.ap-south-1.amazonaws.com
 
       - name: Build Docker image
+        working-directory: backend
         run: |
           docker build -t backend .
 
