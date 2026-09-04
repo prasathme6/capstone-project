@@ -60,3 +60,26 @@ jobs:
         run: |
           docker push \
           410126553447.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
+
+      - name: Deploy backend to EC2
+        run: |
+          COMMAND_ID=$(aws ssm send-command \
+            --region ap-south-1 \
+            --instance-ids i-0fabbd77b86a3be29 \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=[
+              "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 410126553447.dkr.ecr.ap-south-1.amazonaws.com",
+              "docker pull 410126553447.dkr.ecr.ap-south-1.amazonaws.com/backend:latest",
+              "docker rm -f empBackend || true",
+              "docker run -d --name empBackend --restart unless-stopped -p 8080:8080 410126553447.dkr.ecr.ap-south-1.amazonaws.com/backend:latest"
+            ]' \
+            --query 'Command.CommandId' \
+            --output text)
+
+          echo "SSM Command ID: $COMMAND_ID"
+
+          aws ssm wait command-executed \
+            --command-id "$COMMAND_ID" \
+            --instance-id "i-0fabbd77b86a3be29"
+
+          echo "Backend deployment completed"
