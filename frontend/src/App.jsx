@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "http://3.109.59.58:8080/api/employees";
+const API_URL = "http://3.108.235.190:8080/api/employees";
 
 function App() {
   const [employees, setEmployees] = useState([]);
