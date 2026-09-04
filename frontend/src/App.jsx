@@ -137,7 +137,6 @@ function App() {
           </table>
         )}
       </div>
-      <p>...</p>
     </div>
   );
 }
